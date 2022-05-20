@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 #
 # Fake detection script for NZBGet
 #
@@ -212,6 +213,7 @@ def unrar():
 # List contents of rar-files (without unpacking).
 # That's how we detect fakes during download, when the download is not completed yet.
 def list_all_rars(dir):
+	dir = str(dir, 'utf-8')
 	files = get_latest_file(dir)
 	tested = ''
 	out = ''
