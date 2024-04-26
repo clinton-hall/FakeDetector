@@ -213,7 +213,8 @@ def unrar():
 # List contents of rar-files (without unpacking).
 # That's how we detect fakes during download, when the download is not completed yet.
 def list_all_rars(dir):
-	dir = str(dir, 'utf-8')
+	if PY2:
+		dir = str(dir, 'utf-8')
 	files = get_latest_file(dir)
 	tested = ''
 	out = ''
@@ -307,7 +308,10 @@ def call_nzbget_direct(url_command):
 		request = urllib.request.Request(httpUrl)
 	else:
 		request = urllib2.Request(httpUrl)
-	base64string = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
+	if PY3:
+		base64string = base64.decodebytes('%s:%s' % (username, password)).replace('\n', '')
+	else:
+		base64string = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
 	request.add_header("Authorization", "Basic %s" % base64string)
 
 	# Load data from NZBGet
